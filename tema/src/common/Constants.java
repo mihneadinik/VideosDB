@@ -55,6 +55,9 @@ public final class Constants {
     public static final String COMMAND = "command";
     public static final String RECOMMENDATION = "recommendation";
 
+    public static final String BASIC = "basic";
+    public static final String PREMIUM = "premium";
+
     // checker constants
     public static final String ID_STRING = "id";
     public static final String LARGE = "large";
@@ -75,4 +78,7 @@ public final class Constants {
     public static final int MAX_LENGTH = 50;
 
     // add any constants you think you may use
+    public static final String FAVORITE = "favorite";
+    public static final String VIEW = "view";
+    public static final String RATING = "rating";
 }
