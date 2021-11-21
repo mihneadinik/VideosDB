@@ -6,6 +6,8 @@ import common.Constants;
 import fileio.Input;
 import fileio.InputLoader;
 import fileio.Writer;
+import myFiles.ActionSolver;
+import myFiles.Database;
 import org.json.simple.JSONArray;
 
 import java.io.File;
@@ -72,6 +74,17 @@ public final class Main {
 
         //TODO add here the entry point to your implementation
 
+        // imi bag obiectele in baza mea de date
+        Database.getInstance().setActors(input.getActors());
+        Database.getInstance().setMoviesList(input.getMovies());
+        Database.getInstance().setSerialsList(input.getSerials());
+        Database.getInstance().setUsers(input.getUsers());
+
+        // Initializez obiectul care se va ocupa de rezolvarea cerintelor
+        ActionSolver solver = new ActionSolver(fileWriter, arrayResult, input.getCommands());
+        solver.solveActions();
+
         fileWriter.closeJSON(arrayResult);
+
     }
 }
