@@ -13,7 +13,7 @@ public class CommandSolver {
 //        this.command = command;
 //    }
 
-    public static String solve(ActionInputData command) {
+    public static String solve(final ActionInputData command) {
         String result = "";
         if (Objects.equals(command.getType(), Constants.FAVORITE)) {
             result = solveFavorite(command);
@@ -27,7 +27,7 @@ public class CommandSolver {
         return result;
     }
 
-    public static String solveFavorite(ActionInputData command) {
+    public static String solveFavorite(final ActionInputData command) {
         User user = Database.getInstance().getUser(command.getUsername());
         // user doesn't exist
         if (user == null)
@@ -38,7 +38,7 @@ public class CommandSolver {
         return user.addToFavorites(command.getTitle());
     }
 
-    public static String solveView(ActionInputData command) {
+    public static String solveView(final ActionInputData command) {
         User user = Database.getInstance().getUser(command.getUsername());
         // user doesn't exist
         if (user == null)
@@ -49,7 +49,7 @@ public class CommandSolver {
         return user.addToHistory(command.getTitle());
     }
 
-    public static String solveRating(ActionInputData command) {
+    public static String solveRating(final ActionInputData command) {
         User user = Database.getInstance().getUser(command.getUsername());
         // user doesn't exist
         if (user == null)

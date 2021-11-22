@@ -62,7 +62,7 @@ public class Database {
         return null;
     }
 
-    public Video getVideo(String title) {
+    public Video getVideo(final String title) {
         // if it's a movie, return it
         Movie tryMovie = getMovie(title);
         if (tryMovie != null)
@@ -74,7 +74,7 @@ public class Database {
     }
 
     // look for specific movie
-    public Movie getMovie(String title) {
+    public Movie getMovie(final String title) {
         for (Movie currMovie : this.moviesList)
             if (Objects.equals(currMovie.getTitle(), title))
                 return currMovie;
@@ -82,10 +82,59 @@ public class Database {
     }
 
     // look for specific serial
-    public Serial getSerial(String title) {
+    public Serial getSerial(final String title) {
         for (Serial currSerial : this.serialsList)
             if (Objects.equals(currSerial.getTitle(), title))
                 return currSerial;
         return null;
+    }
+
+    public List<Actor> getActorList() {
+        return actorList;
+    }
+
+    public List<User> getUsersList() {
+        return usersList;
+    }
+
+    public List<Movie> getMoviesList() {
+        return moviesList;
+    }
+
+    public List<Serial> getSerialsList() {
+        return serialsList;
+    }
+
+    public List<Video> getMoviesListCasted() {
+        List<Video> out = new ArrayList<>();
+        for (Movie movie : moviesList)
+            out.add(movie);
+        return out;
+    }
+
+    public List<Video> getSerialsListCasted() {
+        List<Video> out = new ArrayList<>();
+        for (Serial serial : serialsList)
+            out.add(serial);
+        return out;
+    }
+
+    public List<Video> getVideosList() {
+        List<Video> allVideos = new ArrayList<>();
+        for (Movie movie : this.moviesList) {
+            allVideos.add(movie);
+        }
+        for (Serial serial : this.serialsList) {
+            allVideos.add(serial);
+        }
+        return allVideos;
+    }
+
+    public void clearDatabase() {
+        this.serialsList.clear();
+        this.moviesList.clear();
+        this.usersList.clear();
+        this.actorList.clear();
+        instance = null;
     }
 }
