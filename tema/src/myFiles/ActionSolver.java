@@ -31,7 +31,9 @@ public class ActionSolver {
             if (Objects.equals(action.getActionType(), Constants.COMMAND)) {
                 result = CommandSolver.solve(action);
             }
-
+            if (Objects.equals(action.getActionType(), Constants.QUERY)) {
+                result = QuerrySolver.solve(action);
+            }
             finalResult(result, action);
         }
     }

@@ -34,8 +34,8 @@ public class User {
     public User(String username, String subscription, Map<String, Integer> history, ArrayList<String> favorites) {
         this.username = username;
         this.subscription = subscription;
-        this.history = history;
-        this.favorites = favorites;
+        setHistory(history);
+        setFavorites(favorites);
         this.nrRatings = 0;
         this.ratedVideos = new HashMap<String, ArrayList<Integer>>();
     }
@@ -52,16 +52,35 @@ public class User {
         return history;
     }
 
-    public void setHistory(Map<String, Integer> history) {
+    public int getNrRatings() {
+        return nrRatings;
+    }
+
+    private void setHistory(Map<String, Integer> history) {
         this.history = history;
+        for (Map.Entry<String, Integer> entry : this.history.entrySet()) {
+            if (Database.getInstance().getMovie(entry.getKey()) != null) {
+                for (int i = 0; i < entry.getValue(); i++)
+                    Database.getInstance().getMovie(entry.getKey()).addView();
+            } else {
+                for (int i = 0; i < entry.getValue(); i++)
+                    Database.getInstance().getSerial(entry.getKey()).addView();
+            }
+        }
     }
 
     public List<String> getFavorites() {
         return favorites;
     }
 
-    public void setFavorites(List<String> favorites) {
+    private void setFavorites(List<String> favorites) {
         this.favorites = favorites;
+        for (String name : this.favorites) {
+            if (Database.getInstance().getMovie(name) != null)
+                Database.getInstance().getMovie(name).addFavorite();
+            else
+                Database.getInstance().getSerial(name).addFavorite();
+        }
     }
 
     // check if user has viewed certain video
@@ -130,7 +149,7 @@ public class User {
                 return "success -> " + movie.getTitle() + " was rated with " + rating + " by " + this.username;
             }
             // a mai dat deja rate la video
-            return movie.getTitle() + " has been already rated";
+            return "error -> " + movie.getTitle() + " has been already rated";
         }
         // user has not seen this video
         return "error -> " + movie.getTitle() + " is not seen";
@@ -143,10 +162,12 @@ public class User {
                 this.nrRatings++;
                 ArrayList<Integer> seasons;
                 if (this.ratedVideos.containsKey(serial.getTitle())) {
+                    // daca a mai dat rate la alte sezoane
                     seasons = this.ratedVideos.get(serial.getTitle());
                     seasons.add(season);
                     this.ratedVideos.replace(serial.getTitle(), seasons);
                 } else {
+                    // daca asta e primul sezon la care da rate
                     seasons = new ArrayList<Integer>();
                     seasons.add(season);
                     this.ratedVideos.put(serial.getTitle(), seasons);
