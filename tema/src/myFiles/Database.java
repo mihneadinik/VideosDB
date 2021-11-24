@@ -3,9 +3,7 @@ package myFiles;
 import common.Constants;
 import fileio.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 // A database that stores all my information
 public class Database {
@@ -121,13 +119,53 @@ public class Database {
 
     public List<Video> getVideosList() {
         List<Video> allVideos = new ArrayList<>();
+        int count = 1;
         for (Movie movie : this.moviesList) {
+            movie.computeRating();
+            movie.setPosition(count++);
             allVideos.add(movie);
         }
         for (Serial serial : this.serialsList) {
+            serial.computeRating();
+            serial.setPosition(count++);
             allVideos.add(serial);
         }
         return allVideos;
+    }
+
+    public Map<String, Integer> popularGenres() {
+        // initialize a hasmap of genres with the number of views
+        Map<String, Integer> viewsByGenres = new HashMap<>();
+        viewsByGenres.put(Constants.ACTION, 0);
+        viewsByGenres.put(Constants.ADVENTURE, 0);
+        viewsByGenres.put(Constants.DRAMA, 0);
+        viewsByGenres.put(Constants.COMEDY, 0);
+        viewsByGenres.put(Constants.CRIME, 0);
+        viewsByGenres.put(Constants.ROMANCE, 0);
+        viewsByGenres.put(Constants.HiSTORY, 0);
+        viewsByGenres.put(Constants.WAR, 0);
+        viewsByGenres.put(Constants.THRILLER, 0);
+        viewsByGenres.put(Constants.MYSTERY, 0);
+        viewsByGenres.put(Constants.FAMILY, 0);
+        viewsByGenres.put(Constants.HORROR, 0);
+        viewsByGenres.put(Constants.FANTASY, 0);
+        viewsByGenres.put(Constants.SCIENCE_FICTION, 0);
+        viewsByGenres.put(Constants.SCI_FI_FANTASY, 0);
+        viewsByGenres.put(Constants.ACTION_ADVENTURE, 0);
+        viewsByGenres.put(Constants.ANIMATION, 0);
+        viewsByGenres.put(Constants.KIDS, 0);
+        viewsByGenres.put(Constants.WESTERN, 0);
+        viewsByGenres.put(Constants.TV_MOVIE, 0);
+
+        List<Video> allVideos = Database.getInstance().getVideosList();
+        for (Video video : allVideos) {
+            List<String> genres = video.getGenres();
+            for (String genre : genres) {
+                viewsByGenres.replace(genre, viewsByGenres.get(genre) + video.getNrViews());
+            }
+        }
+
+        return viewsByGenres;
     }
 
     public void clearDatabase() {

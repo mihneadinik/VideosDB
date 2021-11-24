@@ -232,7 +232,7 @@ public class QuerrySolver {
             sortedActors.add(new Actor(actor));
         }
 
-        return sortActors(querry.getSortType(), querry.getNumber(), sortedActors, 'r');
+        return sortActors(querry.getSortType(), querry.getNumber(), sortedActors, 'r', 'a');
     }
 
     public static String solveAwards(final ActionInputData querry, final List<Actor> actors) {
@@ -252,7 +252,7 @@ public class QuerrySolver {
         }
 
         // sort the actors
-        return sortActors(querry.getSortType(), sortedActors.size(), sortedActors, 'a');
+        return sortActors(querry.getSortType(), sortedActors.size(), sortedActors, 'a', 'b');
     }
 
     public static String solveDescription(final ActionInputData querry, final List<Actor> actors) {
@@ -266,11 +266,11 @@ public class QuerrySolver {
             }
         }
         // sort the actors
-        return sortActors(querry.getSortType(), sortedActors.size(), sortedActors, 'n');
+        return sortActors(querry.getSortType(), sortedActors.size(), sortedActors, 'n', 'b');
     }
 
-    // char field gives the field to be compared (a -> awards, r -> ranking/average, n -> name)
-    public static String sortActors(String order, int number, final List<Actor> sortedActors, char field) {
+    // field gives the field to be compared (a -> awards, r -> ranking/average, n -> name)
+    public static String sortActors(String order, int number, final List<Actor> sortedActors, char field, char querryType) {
         if (order.compareTo(Constants.ASCENDING) != 0 && order.compareTo(Constants.DESCENDING) != 0)
             return "error -> order unknown";
         // sort by order
@@ -300,10 +300,11 @@ public class QuerrySolver {
                 return -1;
             }
         });
-        return createStringList(sortedActors, number);
+        return createStringList(sortedActors, number, querryType);
     }
 
-    public static String createStringList (final List<Actor> actors, int n) {
+    // querryType flag tells if I have to check the average for actors
+    public static String createStringList (final List<Actor> actors, int n, char querryType) {
         StringBuilder out = new StringBuilder();
         int cnt = 0;
         // daca avem de scos mai multi actori decat are lista, ii scoatem pe toti si atat
@@ -311,19 +312,18 @@ public class QuerrySolver {
             n = actors.size();
 
         // imi bag numele fiecarui actor in string
-//        for (int i = 0; i < actors.size() && cnt < n; i++) {
-//            if (actors.get(i).getAverage() != 0) {
-//                out.append(actors.get(i).getName());
-//                out.append(", ");
-//                cnt++;
-//            }
-//        }
         for (Actor actor : actors) {
             // cand am scos destui actori, ne oprim
             if (cnt == n)
                 break;
             // verific daca actorul are grade nenul
-            if (actor.getAverage() != 0) {
+            if (querryType == 'a') {
+                if (actor.getAverage() != 0 && querryType == 'a') {
+                    out.append(actor.getName());
+                    out.append(", ");
+                    cnt++;
+                }
+            } else {
                 out.append(actor.getName());
                 out.append(", ");
                 cnt++;
