@@ -58,9 +58,7 @@ public class Movie extends Video{
     public String toString() {
         return "Movie{" +
                 "title='" + title + '\'' +
-                ", launchYear=" + launchYear +
-                ", genres=" + genres +
-                ", nrViews=" + nrViews +
+                ", overallRating=" + overallRating +
                 '}';
     }
 }

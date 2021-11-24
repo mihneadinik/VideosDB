@@ -19,6 +19,7 @@ public class Video {
     public int nrFavorites;
     public double overallRating;
     public int duration;
+    public int position;
 
     public Video(Video otherVideo) {
         this.title = otherVideo.getTitle();
@@ -29,6 +30,7 @@ public class Video {
         this.nrFavorites = otherVideo.getNrFavorites();
         this.overallRating = otherVideo.getOverallRating();
         this.duration = otherVideo.getDuration();
+        this.position = otherVideo.getPosition();
     }
 
     public Video() {
@@ -40,6 +42,7 @@ public class Video {
         this.nrFavorites = 0;
         this.overallRating = -1;
         this.duration = 0;
+        this.position = 0;
     }
 
     public Video(final String title, final int launchYear, final ArrayList<String> genres, final ArrayList<String> cast, final int duration) {
@@ -51,6 +54,15 @@ public class Video {
         this.nrViews = 0;
         this.nrFavorites = 0;
         this.overallRating = -1;
+        this.position = 0;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public String getTitle() {
@@ -110,13 +122,17 @@ public class Video {
         return true;
     }
 
+    public boolean checkGenre(String genre) {
+        if (this.genres.contains(genre))
+            return true;
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Video{" +
                 "title='" + title + '\'' +
-                ", launchYear=" + launchYear +
-                ", genres=" + genres +
-                ", cast=" + cast +
+                ", overallRating=" + overallRating +
                 '}';
     }
 }

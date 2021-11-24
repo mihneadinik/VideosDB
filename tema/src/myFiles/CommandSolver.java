@@ -7,12 +7,6 @@ import java.util.Objects;
 
 // primeste o comanda si este apelata cu tipul comenzii ca sa rezolve cerinta
 public class CommandSolver {
-//    private final ActionInputData command;
-//
-//    public CommandSolver(ActionInputData command) {
-//        this.command = command;
-//    }
-
     public static String solve(final ActionInputData command) {
         String result = "";
         if (Objects.equals(command.getType(), Constants.FAVORITE)) {

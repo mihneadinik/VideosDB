@@ -1,9 +1,8 @@
 package myFiles;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import common.Constants;
+
+import java.util.*;
 
 public class User {
     private final String username;
@@ -179,6 +178,12 @@ public class User {
         }
         // user has not seen this video
         return "error -> " + serial.getTitle() + " is not seen";
+    }
+
+    public boolean isPremium() {
+        if (this.subscription.equalsIgnoreCase(Constants.PREMIUM))
+            return true;
+        return false;
     }
 
     @Override

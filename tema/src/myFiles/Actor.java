@@ -1,6 +1,7 @@
 package myFiles;
 
 import actor.ActorsAwards;
+import common.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,12 +111,24 @@ public class Actor {
 
     // verific daca descrierea contine toate cuvintele (case insensitive)
     public boolean containsKeywords(final List<String> keywords) {
-        String insensitiveDescription = this.description.toLowerCase(Locale.ROOT);
         for (String word : keywords) {
-            if (!insensitiveDescription.contains(word.toLowerCase(Locale.ROOT)))
+            if (!containsWord(word))
                 return false;
         }
         return true;
+    }
+
+    public boolean containsWord(final String word) {
+        String insensitiveDescription = new String(this.description.toLowerCase(Locale.ROOT));
+        while (insensitiveDescription.contains(word)) {
+            int left = insensitiveDescription.indexOf(word);
+            int right = left + word.length();
+
+            if ((left == 0 || Constants.ACCEPTED_CHARACTERS.contains(String.valueOf(insensitiveDescription.charAt(left - 1)))) && (right == insensitiveDescription.length() || Constants.ACCEPTED_CHARACTERS.contains(String.valueOf(insensitiveDescription.charAt(right)))))
+                return true;
+            insensitiveDescription = insensitiveDescription.substring(0, left - 1) + insensitiveDescription.substring(right, insensitiveDescription.length());
+        }
+        return false;
     }
 
     public double getAverage() {

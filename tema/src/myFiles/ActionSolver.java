@@ -34,6 +34,9 @@ public class ActionSolver {
             if (Objects.equals(action.getActionType(), Constants.QUERY)) {
                 result = QuerrySolver.solve(action);
             }
+            if (Objects.equals(action.getActionType(), Constants.RECOMMENDATION)) {
+                result = RecommendationSolver.solve(action);
+            }
             finalResult(result, action);
         }
     }

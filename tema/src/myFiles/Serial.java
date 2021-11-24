@@ -95,8 +95,8 @@ public class Serial extends Video{
     @Override
     public String toString() {
         return "Serial{" +
-                "nrSeasons=" + nrSeasons +
-                ", seasons=" + seasons +
+                "title='" + title + '\'' +
+                ", overallRating=" + overallRating +
                 '}';
     }
 }
