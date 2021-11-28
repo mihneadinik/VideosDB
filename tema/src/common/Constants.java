@@ -78,6 +78,10 @@ public final class Constants {
     public static final int MAX_LENGTH = 50;
 
     // add any constants you think you may use
+    public static final int FILTER_NUMBER_AWARDS = 3;
+    public static final int FILTER_NUMBER_WORDS = 2;
+    public static final int FILTER_NUMBER_GENRE = 1;
+    public static final int FILTER_NUMBER_YEAR = 0;
     public static final String FAVORITE = "favorite";
     public static final String VIEW = "view";
     public static final String RATING = "rating";
@@ -111,6 +115,6 @@ public final class Constants {
     public static final String KIDS = "Kids";
     public static final String WESTERN = "Western";
     public static final String TV_MOVIE = "TV Movie";
-    public static final String HiSTORY = "History";
+    public static final String HISTORY_G = "History";
     public static final String ACCEPTED_CHARACTERS = " .,-!?;:";
 }

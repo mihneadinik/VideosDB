@@ -6,9 +6,8 @@ import common.Constants;
 import fileio.Input;
 import fileio.InputLoader;
 import fileio.Writer;
-import myFiles.ActionSolver;
-import myFiles.Actor;
-import myFiles.Database;
+import solvers.ActionSolver;
+import databases.Database;
 import org.json.simple.JSONArray;
 
 import java.io.File;
@@ -19,7 +18,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 /**
- * The entry point to this homework. It runs the checker that tests your implentation.
+ * The entry point to this homework. It runs the checker that tests your implementation.
  */
 public final class Main {
     /**
@@ -73,16 +72,14 @@ public final class Main {
         Writer fileWriter = new Writer(filePath2);
         JSONArray arrayResult = new JSONArray();
 
-        //TODO add here the entry point to your implementation
-
-        // imi bag obiectele in baza mea de date
+        // introduce the objects in an empty database
         Database.getInstance().clearDatabase();
         Database.getInstance().setMoviesList(input.getMovies());
         Database.getInstance().setSerialsList(input.getSerials());
         Database.getInstance().setActors(input.getActors());
         Database.getInstance().setUsers(input.getUsers());
 
-        // Initializez obiectul care se va ocupa de rezolvarea cerintelor
+        // Initialise the object that solves the inputs
         ActionSolver solver = new ActionSolver(fileWriter, arrayResult, input.getCommands());
         solver.solveActions();
 
