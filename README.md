@@ -2,6 +2,7 @@
 ## Dinica Mihnea-Gabriel 323CA
 
 1. Structurarea codului
+
 For each newly created class used for implementing the program I created packages as follows:
 * databases only contains the main database of the program
 * entities contains 2 classes (Actor and User) that are related to certain people
@@ -9,6 +10,7 @@ For each newly created class used for implementing the program I created package
 * watchables contains the Video class with its desccendants Movie and Serial, representing objects that can be watched
 
 2. Workflow
+
 I created a main database class of Singleton type for safety reasons that is used to store all the information about the platform read from the input in 4 different lists of objects (the users in the platform, the videos that it contains and the actors that have played in these videos). For each of the 4 objects it has a method that parses the input received from the repository and creates a list with all the objects. It also has different getters, either for a complete list or for a certain object in one of these, and a method that populates a HashTable with the genres and their total number of view.
 Each object from the database has a class of its own with all the fiels required in the homeworks' description and a few extra ones that are needed to execute certain actions. For example:
 - Actor class has 2 extra fields for keeping track of the number of an actor's awards and the average rating of the videos he played in. It has methods that compute these and methods that check its fields to tell wheter it matches the criteria received in certain queries or not.
@@ -18,6 +20,7 @@ Each object from the database has a class of its own with all the fiels required
 - Serial class has a list of seasons and the number of seasons as extra fields, special methods to extract a certain season or to rate it and overriden methods to compute the total duration and average rating.
 
 3. Solving the actions
+
 The actions to be solved are stored and executed in a separate class, ActionSolver, that has 2 functions: firstly it calls the appropriate object to solve a certain type of action and then it transforms the output in a JSON style to be added in the final results array.
 These actions are of 3 types: Command, Query and Recommendation, each of them has a different class that implements their sollution (Query also have 3 sub-classes for readability reasons, otherwise the code would have been too long).
 Each command received is related to a certain user that can view, rate or mark as favorite a video. For doing this, CommandSolver class has a different method for each type of command in which the certain user and video are extracted from the database and the command is solved. At the end, each command returns either an error or success message.
